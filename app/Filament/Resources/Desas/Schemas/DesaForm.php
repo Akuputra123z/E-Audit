@@ -11,12 +11,14 @@ class DesaForm
     {
         return $schema
             ->components([
-                TextInput::make('nama_desa')
-                    ->required(),
                 TextInput::make('kode_desa')
                     ->required(),
                 TextInput::make('nama_kecamatan')
                     ->required(),
+                TextInput::make('nama_desa')
+                    ->required(),
+                
+                
             ]);
     }
 }
