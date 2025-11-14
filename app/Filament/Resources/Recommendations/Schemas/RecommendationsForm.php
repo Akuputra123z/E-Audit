@@ -37,14 +37,50 @@ class RecommendationsForm
                     ->required(),
 
                 /** --------------------------------
-                 *  DESA
+                 *  KECAMATAN (wajib dipilih dulu)
+                 * --------------------------------*/
+                Select::make('nama_kecamatan')
+                    ->label('Kecamatan')
+                    ->options([
+                        'Sumber'   => 'Kecamatan Sumber',
+                        'Bulu'     => 'Kecamatan Bulu',
+                        'Gunem'    => 'Kecamatan Gunem',
+                        'Sale'     => 'Kecamatan Sale',
+                        'Sarang'   => 'Kecamatan Sarang',
+                        'Sedan'    => 'Kecamatan Sedan',
+                        'Pamotan'  => 'Kecamatan Pamotan',
+                        'Sulang'   => 'Kecamatan Sulang',
+                        'Kaliori'  => 'Kecamatan Kaliori',
+                        'Rembang'  => 'Kecamatan Rembang',
+                        'Pancur'   => 'Kecamatan Pancur',
+                        'Kragan'   => 'Kecamatan Kragan',
+                        'Sluke'    => 'Kecamatan Sluke',
+                        'Lasem'    => 'Kecamatan Lasem',
+                    ])
+                    ->required()
+                    ->reactive()
+                    ->afterStateUpdated(fn($state, callable $set) => $set('desa_id', null))
+                    ->searchable(),
+
+                /** --------------------------------
+                 *  DESA (dependen pada kecamatan)
                  * --------------------------------*/
                 Select::make('desa_id')
                     ->label('Nama Desa')
-                    ->relationship('desa', 'nama_desa')
+                    ->options(function (callable $get) {
+                        if (!$get('nama_kecamatan')) {
+                            return [];
+                        }
+
+                        return \App\Models\Desa::where('nama_kecamatan', $get('nama_kecamatan'))
+                            ->orderBy('nama_desa')
+                            ->pluck('nama_desa', 'id');
+                    })
+                    ->required()
+                    ->reactive()
                     ->searchable()
                     ->preload()
-                    ->required(),
+                    ->disabled(fn(callable $get) => !$get('nama_kecamatan')),
 
                 /** --------------------------------
                  *  STATUS
@@ -59,7 +95,7 @@ class RecommendationsForm
                     ->required(),
 
                 /** --------------------------------
-                 *  URAIAN DAN NILAI REKOMENDASI
+                 *  URAIAN & NILAI REKOMENDASI
                  * --------------------------------*/
                 Textarea::make('uraian_rekom')
                     ->label('Uraian Rekomendasi')
@@ -70,7 +106,7 @@ class RecommendationsForm
                     ->numeric(),
 
                 /** --------------------------------
-                 *  URAIAN TINDAK LANJUT
+                 *  TINDAK LANJUT
                  * --------------------------------*/
                 TextInput::make('no_tindak_lanjut')
                     ->label('Nomor Tindak Lanjut'),
@@ -84,19 +120,19 @@ class RecommendationsForm
                     ->numeric(),
 
                 /** --------------------------------
-                 *  UPLOAD BANYAK FILE (PDF/IMAGE)
+                 *  UPLOAD MULTI FILE
                  * --------------------------------*/
                 FileUpload::make('file_tindak_lanjut')
                     ->label('Upload Bukti (PDF / Gambar)')
                     ->disk('public')
                     ->directory('tindaklanjut')
-                    ->multiple()                     // <— penting untuk multi file
+                    ->multiple()
                     ->visibility('public')
                     ->acceptedFileTypes(['image/*', 'application/pdf'])
                     ->maxSize(5120)
-                    ->maxFiles(10)                   // <— batasi jumlah file
-                    ->downloadable()                // bisa di-download
-                    ->openable()                    // bisa dibuka
+                    ->maxFiles(10)
+                    ->downloadable()
+                    ->openable()
                     ->previewable(true),
 
                 /** --------------------------------

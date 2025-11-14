@@ -14,12 +14,13 @@ class DesasTable
     {
         return $table
             ->columns([
-                TextColumn::make('nama_desa')
-                    ->searchable(),
                 TextColumn::make('kode_desa')
-                    ->searchable(),
+                ->searchable(),
                 TextColumn::make('nama_kecamatan')
                     ->searchable(),
+                TextColumn::make('nama_desa')
+                    ->searchable(),
+                
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

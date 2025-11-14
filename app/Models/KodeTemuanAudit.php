@@ -20,6 +20,6 @@ class KodeTemuanAudit extends Model
     // Tambahkan relasi balik (optional tapi bagus untuk Filament)
     public function recommendations()
     {
-        return $this->hasMany(Recommendation::class, 'kode_temuan_audit_id');
+        return $this->hasMany(Recommendations::class, 'kode_temuan_audit_id');
     }
 }

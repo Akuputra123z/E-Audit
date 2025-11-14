@@ -13,6 +13,7 @@ class Recommendations extends Model
 
     protected $fillable = [
         'kode_rekom_id',
+        'nama_kecamatan',
         'desa_id',
         'kode_temuan_audit_id',
         'status',
@@ -26,24 +27,30 @@ class Recommendations extends Model
     ];
 
     protected $casts = [
-        'file_tindak_lanjut' => 'array', // penting untuk multi-file
-        'nilai_rekom' => 'decimal:2',
-        'nilai_tindak_lanjut' => 'decimal:2',
+        'file_tindak_lanjut'   => 'array',
+        'nilai_rekom'          => 'decimal:2',
+        'nilai_tindak_lanjut'  => 'decimal:2',
     ];
 
-    // Relasi ke kode rekomendasi
+    /**
+     * RELASI: Kode Atribut Rekomendasi
+     */
     public function kodeRekom()
     {
         return $this->belongsTo(KodeRekomendasi::class, 'kode_rekom_id');
     }
 
-    // Relasi ke desa
+    /**
+     * RELASI: Desa
+     */
     public function desa()
     {
         return $this->belongsTo(Desa::class, 'desa_id');
     }
 
-    // Relasi ke temuan audit
+    /**
+     * RELASI: Kode Temuan Audit
+     */
     public function kodeTemuanAudit()
     {
         return $this->belongsTo(KodeTemuanAudit::class, 'kode_temuan_audit_id');

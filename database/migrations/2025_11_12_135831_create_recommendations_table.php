@@ -14,43 +14,66 @@ return new class extends Migration
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id();
 
-            // Relasi ke kode atribut rekomendasi
+            /**
+             * KODE REKOMENDASI
+             */
             $table->foreignId('kode_rekom_id')
                 ->nullable()
                 ->constrained('kode_atribut_rekomendasi')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
 
-            // Relasi ke desa
+            /**
+             * KECAMATAN (dipilih dulu di Form)
+             * DISIMPAN sebagai teks
+             */
+            $table->string('nama_kecamatan')->nullable();
+
+            /**
+             * DESA (filtered by kecamatan)
+             */
             $table->foreignId('desa_id')
                 ->nullable()
-                ->constrained('desa') // pastikan nama tabel benar
+                ->constrained('desa') 
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
 
-            // Relasi ke kode temuan audit
+            /**
+             * KODE TEMUAN AUDIT
+             */
             $table->foreignId('kode_temuan_audit_id')
                 ->nullable()
-                ->constrained('kode_atribut_temuan_audit') // cek nama tabel
+                ->constrained('kode_atribut_temuan_audit')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
 
-            // Status rekomendasi
+            /**
+             * STATUS
+             */
             $table->string('status')->nullable();
 
-            // Data rekomendasi
+            /**
+             * DATA REKOMENDASI
+             */
             $table->text('uraian_rekom')->nullable();
             $table->decimal('nilai_rekom', 18, 2)->nullable();
 
-            // Tindak lanjut
+            /**
+             * TINDAK LANJUT
+             */
             $table->string('no_tindak_lanjut')->nullable();
             $table->text('uraian_tindak_lanjut')->nullable();
             $table->decimal('nilai_tindak_lanjut', 18, 2)->nullable();
 
-            // Multi-file penyimpanan
+            /**
+             * MULTI-FILE PDF/GAMBAR
+             * Berisi array json
+             */
             $table->json('file_tindak_lanjut')->nullable();
 
-            // Tanggapan tambahan
+            /**
+             * TANGGAPAN
+             */
             $table->text('tanggapan')->nullable();
 
             $table->timestamps();
