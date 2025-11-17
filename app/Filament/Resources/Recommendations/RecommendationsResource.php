@@ -20,6 +20,7 @@ class RecommendationsResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    
     protected static ?string $recordTitleAttribute = 'Kode Rekomendasi';
 
     public static function form(Schema $schema): Schema

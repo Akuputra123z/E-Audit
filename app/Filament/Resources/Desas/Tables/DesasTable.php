@@ -10,12 +10,13 @@ use Filament\Tables\Table;
 
 class DesasTable
 {
+    
     public static function configure(Table $table): Table
     {
+        
         return $table
             ->columns([
-                TextColumn::make('kode_desa')
-                ->searchable(),
+                
                 TextColumn::make('nama_kecamatan')
                     ->searchable(),
                 TextColumn::make('nama_desa')

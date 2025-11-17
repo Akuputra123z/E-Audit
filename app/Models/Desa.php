@@ -20,7 +20,6 @@ class Desa extends Model
     public function recommendations()
     {
         return $this->hasMany(Recommendations::class, 'desa_id');
-        return $this->belongsTo(Desa::class, 'desa_id');
-
+        
     }
 }

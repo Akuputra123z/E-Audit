@@ -38,6 +38,18 @@ class RecommendationsTable
                     ->height(60)
                     ->width(60)
                     ->square(),
+                    TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->colors([
+                        'warning' => 'Pending',
+                        'info'    => 'proses',
+                        'success' => 'selesai',
+                    ])
+                    ->formatStateUsing(fn ($state) => ucfirst($state)) // biar huruf awal besar
+                    ->searchable()
+                    ->sortable(),
+                
 
                 TextColumn::make('created_at')
                     ->dateTime()
