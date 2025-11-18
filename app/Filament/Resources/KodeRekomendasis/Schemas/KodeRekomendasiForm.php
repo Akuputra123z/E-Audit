@@ -16,6 +16,7 @@ class KodeRekomendasiForm
                     ->label('Jenis Rekomendasi')
                     ->placeholder('Masukkan jenis rekomendasi')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(100)
                     ->columnSpanFull(),
 
@@ -24,6 +25,7 @@ class KodeRekomendasiForm
                     ->placeholder('Tuliskan deskripsi rekomendasi')
                     ->maxLength(500)
                     ->required()
+                   
                     ->unique(ignoreRecord: true)
                     ->columnSpanFull()
                     ->dehydrateStateUsing(fn ($state) => strip_tags($state)),

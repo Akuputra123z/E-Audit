@@ -21,7 +21,6 @@ class DesasTable
                     ->searchable(),
                 TextColumn::make('nama_desa')
                     ->searchable(),
-                
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
